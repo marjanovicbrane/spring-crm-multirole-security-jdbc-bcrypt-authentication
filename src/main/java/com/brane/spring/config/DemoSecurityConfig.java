@@ -49,6 +49,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 			//EMPLOYEE ROLE:users in this role will only be allowed to list customers.
 			//MANAGER ROLE:users in this role will only be allowed to list, add and update customers.
 			//ADMIN ROLE:users in this role will only be allowed to list, add, update and delete customers.
+			// "/customer/showForm*" ---->showFormForAdd and showFormForUpdate
 			.antMatchers("/customer/showForm*").hasAnyRole("MANAGER", "ADMIN")
 			.antMatchers("/customer/save*").hasAnyRole("MANAGER", "ADMIN")
 			.antMatchers("/customer/delete").hasRole("ADMIN")
@@ -90,7 +91,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	//JdbcUserDetailsManager will try to connect your database.
 	//We are going to use this userDetailsManager for our registration form,
 	//to save new user to the database with username, encrypted password(bcrypt) and authority EMPLOYEE.
-	//We will also use userDetailsManager to check if user with that username already exist in database.
+	//We will also use userDetailsManager to check if user with that username already exists in database.
 	//We can also call this methods:updateUser, deleteUser, changePassword.
 	@Bean
 	public UserDetailsManager userDetailsManager() {
