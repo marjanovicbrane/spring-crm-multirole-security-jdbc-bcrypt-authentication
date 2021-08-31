@@ -67,6 +67,21 @@ public class CustomerController {
 		//we are using here POST-REDIRECT-GET PATTERN(PRG)
 		return "redirect:/customer/list";
 	}
+	
+	
+	//Updating customer (pre-populate the form)
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("customerId") int theId,
+									Model theModel) {
+		
+		//get the customer from our service layer
+		Customer theCustomer = customerService.getCustomer(theId);	
+		
+		//add customer as a model attribute to pre-populate the form
+		theModel.addAttribute("customer", theCustomer);
+			
+		return "customer-form";
+	}
 
 }
 
