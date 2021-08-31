@@ -41,6 +41,7 @@ public class CustomerController {
 	}
 	
 	
+	
 	//Form for adding a new customer
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
@@ -55,6 +56,17 @@ public class CustomerController {
 	
 	
 	
+	@PostMapping("/saveCustomer")
+	//data binding using model attribute customer from FORM
+	public String saveCustomer(@ModelAttribute("customer") Customer theCustomer) {
+		
+		//save the customer using our service
+		customerService.saveCustomer(theCustomer);	
+		
+		//use redirect to prevent duplicate submissions.
+		//we are using here POST-REDIRECT-GET PATTERN(PRG)
+		return "redirect:/customer/list";
+	}
 
 }
 
