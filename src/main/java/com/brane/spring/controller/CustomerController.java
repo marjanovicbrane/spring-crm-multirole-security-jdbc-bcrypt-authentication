@@ -69,7 +69,7 @@ public class CustomerController {
 	}
 	
 	
-	//Updating customer (pre-populate the form)
+	//Updating the customer (pre-populate the form)
 	@GetMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("customerId") int theId,
 									Model theModel) {
@@ -81,6 +81,17 @@ public class CustomerController {
 		theModel.addAttribute("customer", theCustomer);
 			
 		return "customer-form";
+	}
+	
+	
+	//Deleting the customer
+	@GetMapping("/delete")
+	public String deleteCustomer(@RequestParam("customerId") int theId) {
+		
+		//delete the customer from the service layer
+		customerService.deleteCustomer(theId);
+		
+		return "redirect:/customer/list";
 	}
 
 }
