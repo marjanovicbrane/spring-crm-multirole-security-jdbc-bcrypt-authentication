@@ -74,6 +74,105 @@ public class RegistrationController {
 		return "registration-form";
 		
 	}
+	
+	
+	//controller method for processing the form for registration-form.jsp
+	//We are going to validate the CrmUser object here with annotation @Valid 
+	//and we are using BindingResult object to store results of validation into this object.
+	@PostMapping("/processRegistrationForm")
+	public String processRegistrationForm(
+				@Valid @ModelAttribute("crmUser") CrmUser theCrmUser, 
+				BindingResult theBindingResult, 
+				Model theModel) {
+				
+		//GET USERNAME WHICH WE ENTERED
+		String userName = theCrmUser.getUserName();
+		
+		//Just for debugging, we are going to print out this information.
+		logger.info("Processing registration form for: " + userName);
+		
+		// form validation
+		//We are using now BindingResult object to see if we had errors, if we had 
+		//return us to the registration-form again.
+		//For validation rules we have only 1 rule and that is:username or password can't have null value.
+		//If we had error (null value), we want to create a new CrmUser object 
+		//and to add that object to the model attribute.
+		//We also want to create one more model attribute registrationError for showing the error
+		//message "User name/password can not be empty." if username or password have null value.
+		if (theBindingResult.hasErrors()) {
 
+			//we want to have a new user object,if we delete this line we will have populated old object(username)
+			theModel.addAttribute("crmUser", new CrmUser());
+			//we will call this model attribute registrationError in our registration-form.jsp to show an error message.
+			theModel.addAttribute("registrationError", "User name/password can not be empty.");
+
+			logger.warning("User name/password can not be empty.");
+			
+			return "registration-form";	
+		}
+		
+		
+		
+		// check the database if user already exists user with the same username
+		boolean userExists = doesUserExist(userName);
+		
+		//If user with this username exits in the database, return us to the registration-form again.
+		//And again create a new CrmUser object and add that object to the model attribute.
+		//We also want to create one more model attribute registrationError for showing the error
+		//message "User name already exists." if username alredy exists in the database.
+		if (userExists) {
+			
+			//we want to have a new user object,if we delete this line we will have populated old object(username)
+			theModel.addAttribute("crmUser", new CrmUser());
+			//we will call this model attribute registrationError in our registration-form.jsp to show an error message.
+			theModel.addAttribute("registrationError", "User name already exists.");
+
+			logger.warning("User name already exists.");
+			
+			return "registration-form";			
+		}
+		
+
+		//we passed all of the validation checks for username and password to can't have null value
+		//and username can't already exist in the database.
+
+		
+		// encrypt the password using BCRYPT algorithm
+        String encodedPassword = passwordEncoder.encode(theCrmUser.getPassword());
+
+        //prepend the encoding algorithm id, because we are using on that way in our database
+        encodedPassword = "{bcrypt}" + encodedPassword;
+                 
+		//We want to give user default role of "EMPLOYEE"
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
+
+        //create user object (from Spring Security framework)
+        User tempUser = new User(userName, encodedPassword, authorities);
+
+        //save user in the database
+        //we are using here object userDetailsManager to save a new user to the database.
+        userDetailsManager.createUser(tempUser);		
+		
+        logger.info("Successfully created user: " + userName);
+        
+        //now when user is successfully created, return us to the registration-confirmation page
+        return "registration-confirmation";		
+	}
+	
+	
+	
+	//we are using this method to check if the user with this username alredy exsits in the database
+	private boolean doesUserExist(String userName) {
+		
+		logger.info("Checking if user exists: " + userName);
+		
+		//check the database if the user with this username already exists
+		//we are using here object userDetailsManager to check this.
+		boolean exists = userDetailsManager.userExists(userName);
+		
+		logger.info("User: " + userName + ", exists: " + exists);
+		
+		return exists;
+	}
 
 }

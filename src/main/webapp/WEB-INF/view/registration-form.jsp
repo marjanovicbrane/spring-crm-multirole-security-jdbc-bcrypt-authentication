@@ -50,7 +50,9 @@ Jstl tag "c" so we can using css, adding some pictures, js, for loop, if stateme
 					            <div>
 								
 									<!-- Check for registration error from the model registrationError
-									from the class RegistrationController-->
+									from the class RegistrationController.
+									If username or password can't have null value, error message will show here.
+									If user with the same username exits in the database, error message will show here. -->
 									<c:if test="${registrationError != null}">
 								
 										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
