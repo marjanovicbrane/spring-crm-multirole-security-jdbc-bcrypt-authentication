@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import com.brane.spring.user.CrmUser;
 
 @Controller
 @RequestMapping("/register")
@@ -62,6 +62,18 @@ public class RegistrationController {
 			dataBinder.registerCustomEditor(String.class, StringTrimmerEditor);
 		}	
 	
+		
+		
+	//method for showing the form, with parameter Model
+	@GetMapping("/showRegistrationForm")
+	public String showMyLoginPage(Model theModel) {
+		
+		//add USER object to the model
+		theModel.addAttribute("crmUser", new CrmUser());
+		
+		return "registration-form";
+		
+	}
 
 
 }
