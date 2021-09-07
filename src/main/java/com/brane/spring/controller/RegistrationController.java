@@ -91,6 +91,9 @@ public class RegistrationController {
 		//add USER object to the model
 		theModel.addAttribute("crmUser", new CrmUser());
 		
+		//add roles to the model for form display
+		theModel.addAttribute("roles", roles);
+		
 		return "registration-form";
 		
 	}
