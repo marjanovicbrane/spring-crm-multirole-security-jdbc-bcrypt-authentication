@@ -19,6 +19,10 @@ public class CrmUser {
 	private String password;
 	
 	
+	//we adding a new field for role, because we want to have multi-role support
+	private String formRole;
+	
+	
 	
 	//default constructor
 	public CrmUser() {
@@ -41,6 +45,16 @@ public class CrmUser {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public String getFormRole() {
+		return formRole;
+	}
+
+
+	public void setFormRole(String formRole) {
+		this.formRole = formRole;
 	}
 	
 	
