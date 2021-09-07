@@ -1,8 +1,11 @@
 package com.brane.spring.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,23 @@ public class RegistrationController {
 	
 	//we are using logger just for debugging
 	private Logger logger = Logger.getLogger(getClass().getName());
+	
+	//we need to create a collection of roles that will be displayed on the registration form.
+	//we will use @PostConstruct annotation to initialize the collection of roles.
+	private Map<String, String> roles;
+	
+	
+	//This method will be executed after the spring bean is initialized.
+	@PostConstruct
+	protected void loadRoles() {
+		
+		roles = new LinkedHashMap<String, String>();
+		
+		// key=the role, value=display to user 
+		roles.put("ROLE_EMPLOYEE", "Employee");
+		roles.put("ROLE_MANAGER", "Manager");
+		roles.put("ROLE_ADMIN", "Admin");		
+	}
 	
 	
 	
