@@ -127,6 +127,11 @@ public class RegistrationController {
 
 			//we want to have a new user object,if we delete this line we will have populated old object(username)
 			theModel.addAttribute("crmUser", new CrmUser());
+			
+			//add roles to the model for form display,if we delete this line of code we will get
+			//empty field for roles, because we need to load data-roles in the model attribute roles.
+			theModel.addAttribute("roles", roles);
+			
 			//we will call this model attribute registrationError in our registration-form.jsp to show an error message.
 			theModel.addAttribute("registrationError", "User name/password can not be empty.");
 
@@ -148,6 +153,11 @@ public class RegistrationController {
 			
 			//we want to have a new user object,if we delete this line we will have populated old object(username)
 			theModel.addAttribute("crmUser", new CrmUser());
+			
+			//add roles to the model for form display,if we delete this line of code we will get
+			//empty field for roles, because we need to load data-roles in the model attribute roles.
+			theModel.addAttribute("roles", roles);
+			
 			//we will call this model attribute registrationError in our registration-form.jsp to show an error message.
 			theModel.addAttribute("registrationError", "User name already exists.");
 
@@ -176,7 +186,7 @@ public class RegistrationController {
         //authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
         
         //if the user selected role other than employee, 
-        // then add that one too (multiple roles)
+        //then add that one too (multiple roles)
         String formRole = theCrmUser.getFormRole();
 
         if (!formRole.equals("ROLE_EMPLOYEE")) {
