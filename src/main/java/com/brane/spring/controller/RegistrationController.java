@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -165,9 +166,22 @@ public class RegistrationController {
 
         //prepend the encoding algorithm id, because we are using on that way in our database
         encodedPassword = "{bcrypt}" + encodedPassword;
-                 
+        
+        //Method 1
 		//We want to give user default role of "EMPLOYEE"
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
+        
+        //Method 2
+        //List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList();
+        //authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+        
+        //if the user selected role other than employee, 
+        // then add that one too (multiple roles)
+        String formRole = theCrmUser.getFormRole();
+
+        if (!formRole.equals("ROLE_EMPLOYEE")) {
+        		authorities.add(new SimpleGrantedAuthority(formRole));
+        }
 
         //create user object (from Spring Security framework)
         User tempUser = new User(userName, encodedPassword, authorities);
