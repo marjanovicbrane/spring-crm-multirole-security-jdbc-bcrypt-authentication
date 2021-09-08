@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>crm-with-security-jdbc-bcrypt-authentication</name>
+	<name>crm-multirole-with-security-jdbc-bcrypt-authentication</name>
 	<comment></comment>
 	<projects>
 	</projects>
