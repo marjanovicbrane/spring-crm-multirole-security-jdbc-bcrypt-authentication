@@ -1,10 +1,10 @@
 # Spring CRM with multi-role and security using JDBC authentication with BCRYPT algorithm
 
-In this project I used Spring Security for JDBC authentication and authorization with custom login page.
+In this project I used Spring Security for JDBC authentication and authorization with custom login page.I also applied authorization for appropriate user roles (EMPLOYEE, MANAGER or ADMIN).
 
 ![Capture](https://user-images.githubusercontent.com/61464267/133890917-7d0f68cd-bc29-4bdc-8cfb-13697a50c999.PNG)
 
-I also made registration form, so we can register a new user and choose appropriate role for that user, user can have multiroles (drop-down list).User can have 3 roles:EMPLOYEE,MANAGER and ADMIN.When we create a new user, that user is saved to the database.
+I also made registration form, so we can register a new user and choose appropriate role for that user, we can save it to the database.User can have multiroles (drop-down list).User can have 3 roles:EMPLOYEE,MANAGER and ADMIN.With appropriate role, only that user can access some additional information and pages on the web app.
 
 
 ![2](https://user-images.githubusercontent.com/61464267/133891429-8dea3f61-6a71-444b-a285-98989bc99d28.PNG)
