@@ -1,4 +1,4 @@
-# Spring CRM with multi-role and security using JDBC authentication with BCRYPT algorithm
+# Spring CRM with multi-role (drop-down list) and security using JDBC authentication with BCRYPT algorithm
 
 In this project I used Spring Security for JDBC authentication and authorization with custom login page.I applied authorization for appropriate user roles (EMPLOYEE, MANAGER or ADMIN).
 
